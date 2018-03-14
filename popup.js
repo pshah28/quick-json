@@ -49,6 +49,8 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       dataType: 'json',
       url: jsonURL,
       data: data,
+			username:"test",
+			password:"test",
       success: function(data) {
         json = JSON.parse(JSON.stringify(data));
         window.editedJSON = json;
@@ -222,13 +224,7 @@ function save(data, filename){        //save function from online
       data = JSON.stringify(data, undefined, 4)
   }
 
-  var blob = new Blob([data], {type: 'text/json'}),
-      e    = document.createEvent('MouseEvents'),
-      a    = document.createElement('a')
+  var blob = new Blob([data], {type: 'text/json'})
 
-  a.download = filename
-  a.href = window.URL.createObjectURL(blob)
-  a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
-  e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
-  a.dispatchEvent(e)
-}
+	chrome.downloads.download({url: window.URL.createObjectURL(blob), filename:filename})
+ }
