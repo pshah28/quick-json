@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "quick-json",
+  "description": "quickly view and edit json for most pages sites",
+  "version": "1.0",
+
+  "icons": {
+    "48": "icon.png"
+  },
+
+  "permissions": ["tabs", "<all_urls>", "unlimitedStorage", "downloads", "downloads.shelf", "storage"],
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  }
+}

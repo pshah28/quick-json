@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body
+      {
+        height: 400px;
+        width: 700px;
+        overflow: scroll;
+        font-size: 14px;
+        margin-top: 20px;
+        font-family: monospace;
+      }
+      #json
+      {
+        overflow-x: scroll;
+        border-left: 0;
+        padding-left: 5px;
+      }
+      ul,
+      li {
+        list-style:none;
+        padding-left: 20px;
+        border-left: solid black 1px;
+      }
+
+      #json > li,
+      #json > ul {
+        padding-left: 0;
+        border-left: 0;
+        font-weight: bold;
+      }
+      .value {
+        color: blue;
+        font-weight: normal;
+      }
+      .key {
+        font-weight: bold;
+      }
+      .json-string {
+        color: green;
+      }
+      .modified {
+        background: yellow;
+      }
+
+      #filter
+      {
+        position: fixed;
+        right: 0;
+        top: 0;
+      }
+      #path
+      {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        background: yellow;
+        padding: 5px;
+        font-weight: bold;
+      }
+      #saveButton
+      {
+        position: fixed;
+        right: 0;
+        top: 25px;
+      }
+      input {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <input id="filter" type="text" placeholder="Filter.."></input>
+    <button id="saveButton">Save</button>
+    <pre id="path"></pre>
+    <ul class="json-wrapper" key="json"  id="json"></ul>
+    <script type="text/javascript" src="jquery3.3.1.js"></script>
+    <script type="text/javascript" src="popup.js"></script>
+  </body>
+</html>
