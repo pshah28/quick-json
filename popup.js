@@ -126,7 +126,6 @@ document.addEventListener('mouseover', function(e){    //for path on hover
   var el = e.target || e.srcElement;
   path = getPath(el);
   document.getElementById("path").innerText = path.join(".");
-
 })
 
 //get json path given a dom node
@@ -181,7 +180,6 @@ function editJSON (evt, type) {     //set value of html dom element and then als
   el.innerText = el.getAttribute("key") + ": " + val;
 	el.classList.add("modified");
   path = getPath(el);
-	console.log(path)
   window.editedJSON = setNode(path, window.editedJSON, val, type) //modify json given path of node
   chrome.storage.local.set({"json":window.editedJSON})
 }
