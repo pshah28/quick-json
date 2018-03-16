@@ -116,10 +116,9 @@ function traverse(obj, el) {
 
 
 document.addEventListener('click', addInput);    //add input box on click
+
 document.getElementById("saveButton").addEventListener("click", function(e){ //save button
-	chrome.downloads.setShelfEnabled(false)
 	save(window.editedJSON,"test.json");
-	chrome.downloads.setShelfEnabled(false)
 });
 
 document.addEventListener('mouseover', function(e){    //for path on hover
