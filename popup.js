@@ -27,36 +27,13 @@ chrome.downloads.onChanged.addListener(function(){
 this.filePath = "";
 //fetch json with ajax query
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-  chrome.tabs.sendMessage(tabs[0].id, {username:'test', password:'test'}, function(response) {
+  chrome.tabs.sendMessage(tabs[0].id, {}, function(response) {
 		originalUrl = tabs[0].url;
     if(originalUrl.includes("JSONDATA")) { //if json has been edited and saved, use the locally stored json data to preserve changes
       useLocalJSON();
     }
     else{ //else make a request to retrieve the json of the page
-			url = new URL(originalUrl);
-			url = url.origin + url.pathname
-      if(url.includes(".html")) {
-        jsonURL = url.replace(".html", ".json");
-      }
-      else if (url.split("/").pop() != "") {
-        jsonURL = url + ".json";
-      }
-      else {
-        jsonURL = url + "/index.json";
-      }
-    data = {username:"test", password:"test"}
-    $.ajax({
-      dataType: 'json',
-      url: jsonURL,
-      data: data,
-			username:"test",
-			password:"test",
-      success: function(data) {
-        json = JSON.parse(JSON.stringify(data));
-        window.editedJSON = json;
-        traverse(json, document.getElementById('json'));
-      }
-    });
+			makeAjaxRequest(originalUrl)
     }
   })
 });
@@ -80,6 +57,31 @@ document.getElementById('filter').addEventListener("keydown",function search(e) 
         index = 0;
     }
 });
+
+function makeAjaxRequest(originalUrl) {
+	url = new URL(originalUrl);
+	url = url.origin + url.pathname
+	if(url.includes(".html")) {
+		jsonURL = url.replace(".html", ".json");
+	}
+	else if (url.split("/").pop() != "") {
+		jsonURL = url + ".json";
+	}
+	else {
+		jsonURL = url + "/index.json";
+	}
+	$.ajax({
+		dataType: 'json',
+		url: jsonURL,
+		username:"test",
+		password:"test",
+		success: function(data) {
+			json = JSON.parse(JSON.stringify(data));
+			window.editedJSON = json;
+			traverse(json, document.getElementById('json'));
+		}
+	});
+}
 
 //constructing a nested ul given a json object
 function traverse(obj, el) {
@@ -153,9 +155,9 @@ function addInput(e){      //add input box on click
 	    input = document.createElement("input");
 	    input.value = text;
 
-      button = document.createElement("button");
-      button.innerHTML = "EDIT";
-      button.addEventListener("click", (evt) => {
+      editButton = document.createElement("button");
+      editButton.innerHTML = "EDIT";
+      editButton.addEventListener("click", (evt) => {
         editJSON(evt, type);
       });
 
@@ -166,7 +168,7 @@ function addInput(e){      //add input box on click
 			});
 
       target.append(input);
-	    target.append(button);
+	    target.append(editButton);
       target.append(deleteButton)
 	  }
 	}
